@@ -8,8 +8,9 @@ library(patchwork) #lets you place side-by-side plots
 data <- read.csv("OCCAQP4GM.csv", header = TRUE)
 print(data)
 
+#the function is.na evaluates the $column for any values listed as NA, and then removes the row
 data[!is.na(data$gmload),]
-gm <- ggbarplot(data, x = "npx", y = "gmload", title = "AQP4 Expression Increases with Age in Grey Matter",
+gm <- ggbarplot(data, x = "npx", y = "gmload", title = "AQP4 Expression in Grey Matter",
           ylab= "% of AQP4 Grey Matter Loads", xlab = "Groups", color = "black", fill = "npx",
           add = c("mean_se", "jitter"), palette = "jco",
           position = position_dodge(.8)) +
@@ -19,11 +20,11 @@ data2<- read.csv("OCCAQP4WM.csv", header = TRUE)
 print(data2)
 
 data2[!is.na(data2$wmload),]
-wm <- ggbarplot(data2, x = "npx", y = "wmload", title = "AQP4 Expression Increases with Age in White Matter",
+wm <- ggbarplot(data2, x = "npx", y = "wmload", title = "AQP4 Expression in White Matter",
           ylab= "% of AQP4 White Matter Loads", xlab = "Groups", color = "black", fill = "npx",
           add = c("mean_se", "jitter"), palette = "jco",
           position = position_dodge(.8)) +
   stat_summary(fun.data2=mean_cl_boot, geom="errorbar", width=0.3)
 
-#combine both graphs
+#combine both graphs from the patchwork library
 gm + wm
